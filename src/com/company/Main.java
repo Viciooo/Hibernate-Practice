@@ -31,19 +31,23 @@ public class Main {
     public static void main(final String[] args) throws Exception {
 
         try (Session session = getSession()) {
-//            Product product = new Product("Table",10);
-//            Supplier supplier = new Supplier("OoohBi","Krakowska","Krakow");
-            Transaction tx = session.beginTransaction();
-//            session.save(supplier);
-//            session.save(product);
-            Query query = session.createQuery(" From Supplier");
-            List results = query.getResultList();
-            for (Object result : results) {
-                Set<Product> productSet = ((Supplier)result).getProducts();
-                for(Product product:productSet){
+//            Category category = new Category("AGD");
+//            Query query1 = session.createQuery("From Product where ProductID = 3");
+//            Product product = (Product) query1.getResultList().get(0);
+            Query query = session.createQuery("From Category where CategoryID = 5");
+            List categories = query.getResultList();
+            for(Object category: categories){
+                System.out.println(((Category)category).getName());
+                for(Product product: ((Category) category).getProducts()){
                     System.out.println(product.getProductName());
                 }
             }
+//            Category category = (Category)query.getResultList().get(0);
+//            category.getProducts().add(category.getProducts().size(),product);
+//            System.out.println(category);
+//            Transaction tx = session.beginTransaction();
+
+//            session.save(category);
 //            tx.commit();
         }
     }

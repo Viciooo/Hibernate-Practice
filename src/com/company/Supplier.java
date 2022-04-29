@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,13 +13,24 @@ public class Supplier {
     private String Street;
     private String City;
 
+
     @OneToMany(mappedBy="supplier")
     private Set<Product> products;
 
     public Set<Product> getProducts() {
         return products;
     }
-
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "SupplierProducts",
+//            joinColumns = @JoinColumn(name = "SupplierID"),
+//            inverseJoinColumns = @JoinColumn(name = "ProductID")
+//    )
+//    private Set<Product> products;
+//    public Set<Product> getProducts() { return products;}
+//    public void setProducts(Set<Product> products) {
+//        this.products = products;
+//    }
     public Supplier() {
     }
 

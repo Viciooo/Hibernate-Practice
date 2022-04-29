@@ -31,24 +31,16 @@ public class Main {
     public static void main(final String[] args) throws Exception {
 
         try (Session session = getSession()) {
-//            Category category = new Category("AGD");
-//            Query query1 = session.createQuery("From Product where ProductID = 3");
-//            Product product = (Product) query1.getResultList().get(0);
-            Query query = session.createQuery("From Category where CategoryID = 5");
-            List categories = query.getResultList();
-            for(Object category: categories){
-                System.out.println(((Category)category).getName());
-                for(Product product: ((Category) category).getProducts()){
-                    System.out.println(product.getProductName());
+            Query query = session.createQuery("From Product");
+            List products = query.getResultList();
+            for (Object product: products){
+                Set<Invoice> invoices = ((Product) product).getInvoices();
+                for (Invoice invoice : invoices){
+                    System.out.println(invoice.getInvoiceNumber());
                 }
+                System.out.println(((Product)product).getProductName());
+                System.out.println("*******************");
             }
-//            Category category = (Category)query.getResultList().get(0);
-//            category.getProducts().add(category.getProducts().size(),product);
-//            System.out.println(category);
-//            Transaction tx = session.beginTransaction();
-
-//            session.save(category);
-//            tx.commit();
         }
     }
 }

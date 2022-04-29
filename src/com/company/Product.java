@@ -1,19 +1,48 @@
 package com.company;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int ProductID;
     private String ProductName;
 
     private Integer UnitsOnStock;
 
     @ManyToOne
-    @JoinColumn(name="SupplierID",nullable = false)
+    @JoinColumn(name = "SupplierID", nullable = false)
     private Supplier supplier;
+
+    @ManyToMany(mappedBy = "products")
+    private Set<Invoice> invoices;
+
+    public void sellProduct(int quantity, Invoice invoice) {
+        // nie jestem pewny czy o to chodzi, ale to mało istotne, bo zadanie ma sprawdzać inne rzeczy
+        if (quantity > 0 && this.UnitsOnStock >= quantity) {
+            UnitsOnStock -= quantity;
+            invoice.setQuantity(invoice.getQuantity() + quantity);
+            invoice.getProducts().add(this);
+        }
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Set<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 
     public Product(String productName, Integer unitsOnStock) {
         ProductName = productName;
@@ -44,5 +73,6 @@ public class Product {
         UnitsOnStock = unitsOnStock;
     }
 
-    public Product(){}
+    public Product() {
+    }
 }

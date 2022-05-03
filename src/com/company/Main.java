@@ -1,46 +1,27 @@
 package com.company;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
-    private static final SessionFactory ourSessionFactory;
-
-    static {
-        try {
-            Configuration configuration = new Configuration();
-            configuration.configure();
-
-            ourSessionFactory = configuration.buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
+    public static void main(final String[] args)  {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myDatabaseConfig");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction etx = em.getTransaction();
+        etx.begin();
+//do something
+        Query query = em.createQuery("FROM Product ");
+        List results = query.getResultList();
+        for ( Object o : results){
+            System.out.println(((Product)o).getProductName());
         }
-    }
+//        etx.commit();
+//        em.close();
 
-    public static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
-    }
-
-    public static void main(final String[] args) throws Exception {
-
-        try (Session session = getSession()) {
-            Query query = session.createQuery("From Product");
-            List products = query.getResultList();
-            for (Object product: products){
-                Set<Invoice> invoices = ((Product) product).getInvoices();
-                for (Invoice invoice : invoices){
-                    System.out.println(invoice.getInvoiceNumber());
-                }
-                System.out.println(((Product)product).getProductName());
-                System.out.println("*******************");
-            }
-        }
     }
 }

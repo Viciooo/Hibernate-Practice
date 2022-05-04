@@ -1,6 +1,8 @@
 package com.company;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,8 +14,8 @@ public class Invoice {
     private String InvoiceNumber;
     private int Quantity;
 
-    @ManyToMany
-    private Set<Product> products;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Product> products = new HashSet<>();
 
     public Set<Product> getProducts() {
         return products;

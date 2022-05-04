@@ -14,7 +14,7 @@ public class Supplier {
     private String City;
 
 
-    @OneToMany(mappedBy="supplier")
+    @OneToMany(mappedBy="supplier",cascade = CascadeType.PERSIST)
     private Set<Product> products;
 
     public Set<Product> getProducts() {

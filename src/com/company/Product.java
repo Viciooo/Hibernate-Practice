@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,12 +13,12 @@ public class Product {
 
     private Integer UnitsOnStock;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "SupplierID", nullable = false)
     private Supplier supplier;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Invoice> invoices;
+    @ManyToMany(mappedBy = "products",cascade = CascadeType.PERSIST)
+    private Set<Invoice> invoices = new HashSet<>();
 
     public void sellProduct(int quantity, Invoice invoice) {
         // nie jestem pewny czy o to chodzi, ale to mało istotne, bo zadanie ma sprawdzać inne rzeczy

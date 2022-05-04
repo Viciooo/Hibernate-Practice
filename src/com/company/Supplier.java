@@ -1,22 +1,13 @@
 package com.company;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@SecondaryTable(name="Address")
-public class Supplier {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int SupplierID;
-    private String CompanyName;
-
-    @Column(table = "Address")
-    private String Street;
-    @Column(table = "Address")
-    private String City;
-//    private Address address;
+public class Supplier extends Company{
+    private String bankAccountNumber;
 
 
     @OneToMany(mappedBy="supplier",cascade = CascadeType.PERSIST)
@@ -33,44 +24,17 @@ public class Supplier {
     public Supplier() {
     }
 
-    public Supplier(String companyName, String street, String city) {
-        CompanyName = companyName;
-        Street = street;
-        City = city;
+    public Supplier(String companyName, String street, String city, String zipCode, String bankAccountNumber) {
+        super(companyName, street, city, zipCode);
+        this.bankAccountNumber = bankAccountNumber;
     }
 
-    public String getStreet() {
-        return Street;
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
     }
 
-    public void setStreet(String street) {
-        Street = street;
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
     }
-
-    public String getCity() {
-        return City;
-    }
-
-    public void setCity(String city) {
-        City = city;
-    }
-
-    public int getSupplierID() {
-        return SupplierID;
-    }
-
-    public void setSupplierID(int supplierID) {
-        SupplierID = supplierID;
-    }
-
-    public String getCompanyName() {
-        return CompanyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        CompanyName = companyName;
-    }
-
-
 }
 

@@ -11,7 +11,7 @@
     <property name="connection.url">jdbc:sqlite:mydb.db</property>
     <property name="connection.username"/>
     <property name="connection.password"/>
-<!--    <property name="hibernate.hbm2ddl.auto">create</property>-->
+<!--    <property name="hibernate.hbm2ddl.auto">update</property>-->
     <mapping class="com.company.Product"/>
     <mapping class="com.company.Supplier"/>
     <mapping class="com.company.Category"/>
